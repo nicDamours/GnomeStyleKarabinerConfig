@@ -2042,6 +2042,79 @@
           ]
         }
       ]
+    },
+    {
+      "description": "GNOME: Ctrl+Shift+C/V copy & paste in terminals",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "c",
+            "modifiers": {
+              "mandatory": [
+                "control",
+                "shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "c",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.apple\\.Terminal$",
+                "^com\\.googlecode\\.iterm2$",
+                "^com\\.mitchellh\\.ghostty$",
+                "^net\\.kovidgoyal\\.kitty$",
+                "^(org|io)\\.alacritty$",
+                "^com\\.github\\.wez\\.wezterm$",
+                "^dev\\.warp\\.Warp"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "v",
+            "modifiers": {
+              "mandatory": [
+                "control",
+                "shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "v",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.apple\\.Terminal$",
+                "^com\\.googlecode\\.iterm2$",
+                "^com\\.mitchellh\\.ghostty$",
+                "^net\\.kovidgoyal\\.kitty$",
+                "^(org|io)\\.alacritty$",
+                "^com\\.github\\.wez\\.wezterm$",
+                "^dev\\.warp\\.Warp"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -81,3 +81,29 @@ def test_ctrl_f4_closes_tab(doc):
 @pytest.mark.parametrize("key", GENERIC_KEYS)
 def test_generic_covers_keys(doc, key):
     assert press(doc, key, {"control"}, SAFARI) == k(key, "command")
+
+
+# --- Task 2: Terminal copy & paste ---
+
+@pytest.mark.parametrize("app", TERMINAL_SAMPLES)
+@pytest.mark.parametrize("key", ["c", "v"])
+def test_terminal_ctrl_shift_c_v(doc, app, key):
+    assert press(doc, key, {"control", "shift"}, app) == k(key, "command")
+
+
+def test_terminal_other_ctrl_shift_untouched(doc):
+    assert press(doc, "t", {"control", "shift"}, TERMINAL) is None
+
+
+def test_ctrl_shift_c_in_safari_is_cmd_shift_c(doc):
+    assert press(doc, "c", {"control", "shift"}, SAFARI) == k("c", "command", "shift")
+
+
+def test_terminal_lists_identical(doc):
+    lists = [cond["bundle_identifiers"]
+             for rule in doc["rules"] for m in rule["manipulators"]
+             for cond in m.get("conditions", []) if "bundle_identifiers" in cond]
+    types = {cond["type"] for rule in doc["rules"] for m in rule["manipulators"]
+             for cond in m.get("conditions", [])}
+    assert "frontmost_application_if" in types
+    assert all(lst == build.TERMINALS for lst in lists)

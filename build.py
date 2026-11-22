@@ -69,10 +69,17 @@ def ctrl_text_rule():
             "manipulators": ms}
 
 
+def terminal_rule():
+    c = [{"type": "frontmost_application_if", "bundle_identifiers": TERMINALS}]
+    return {"description": "GNOME: Ctrl+Shift+C/V copy & paste in terminals",
+            "manipulators": [manip(key, key, ["control", "shift"], [], ["command"], c)
+                             for key in ("c", "v")]}
+
+
 def build():
     return {
         "title": "GNOME-style shortcuts for a Windows keyboard",
-        "rules": [ctrl_text_rule()],
+        "rules": [ctrl_text_rule(), terminal_rule()],
     }
 
 
