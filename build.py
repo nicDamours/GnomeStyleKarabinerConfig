@@ -70,8 +70,10 @@ def ctrl_text_rule():
     c = not_in_terminals()
     sel = ["shift"]  # Shift passes through so selection works
     ms = [
-        manip("left_arrow", "left_arrow", ["control"], sel, ["option"], c),
-        manip("right_arrow", "right_arrow", ["control"], sel, ["option"], c),
+        # Word jumps apply in terminals too: macOS would otherwise take Ctrl+arrows
+        # for switching Spaces, and terminals jump words with Alt+arrows.
+        manip("left_arrow", "left_arrow", ["control"], sel, ["option"]),
+        manip("right_arrow", "right_arrow", ["control"], sel, ["option"]),
         manip("delete_or_backspace", "delete_or_backspace", ["control"], [], ["option"], c),
         manip("delete_forward", "delete_forward", ["control"], [], ["option"], c),
         manip("home", "up_arrow", ["control"], sel, ["command"], c),
@@ -83,7 +85,7 @@ def ctrl_text_rule():
     # Generic Ctrl -> Cmd. Optional is only Shift (never "any"), so Ctrl+Alt
     # combos fall through to the desktop rule.
     ms += [manip(key, key, ["control"], sel, ["command"], c) for key in GENERIC_KEYS]
-    return {"description": "GNOME: Ctrl shortcuts & text editing (not in terminals)",
+    return {"description": "GNOME: Ctrl shortcuts & text editing (not in terminals, except word jumps)",
             "manipulators": ms}
 
 

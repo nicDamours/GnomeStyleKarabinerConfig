@@ -36,7 +36,8 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 | Keys | Where | Does |
 |---|---|---|
 | Ctrl+C/V/X/Z/A/S/F/T/W/L/Q… (+Shift) | everywhere except terminals | the Mac Cmd version |
-| Ctrl+←/→, Ctrl+Backspace/Delete | except terminals | jump / delete by word |
+| Ctrl+←/→ (+Shift) | everywhere | jump by word |
+| Ctrl+Backspace/Delete | except terminals | delete by word |
 | Home / End (+Shift to select) | except terminals and browsers | line start & end |
 | Ctrl+Home / Ctrl+End (+Shift to select) | except terminals | document start & end |
 | Ctrl+F4 | except terminals | close tab |

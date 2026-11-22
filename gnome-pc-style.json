@@ -2,7 +2,7 @@
   "title": "GNOME-style shortcuts for a Windows keyboard",
   "rules": [
     {
-      "description": "GNOME: Ctrl shortcuts & text editing (not in terminals)",
+      "description": "GNOME: Ctrl shortcuts & text editing (not in terminals, except word jumps)",
       "manipulators": [
         {
           "type": "basic",
@@ -22,20 +22,6 @@
               "key_code": "left_arrow",
               "modifiers": [
                 "option"
-              ]
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "^com\\.apple\\.Terminal$",
-                "^com\\.googlecode\\.iterm2$",
-                "^com\\.mitchellh\\.ghostty$",
-                "^net\\.kovidgoyal\\.kitty$",
-                "^(org|io)\\.alacritty$",
-                "^com\\.github\\.wez\\.wezterm$",
-                "^dev\\.warp\\.Warp"
               ]
             }
           ]
@@ -58,20 +44,6 @@
               "key_code": "right_arrow",
               "modifiers": [
                 "option"
-              ]
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "^com\\.apple\\.Terminal$",
-                "^com\\.googlecode\\.iterm2$",
-                "^com\\.mitchellh\\.ghostty$",
-                "^net\\.kovidgoyal\\.kitty$",
-                "^(org|io)\\.alacritty$",
-                "^com\\.github\\.wez\\.wezterm$",
-                "^dev\\.warp\\.Warp"
               ]
             }
           ]

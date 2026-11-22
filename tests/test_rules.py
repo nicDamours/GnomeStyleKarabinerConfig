@@ -226,3 +226,12 @@ def test_ctrl_click_is_cmd_click(doc, app):
 
 def test_right_ctrl_works_like_left(doc):
     assert press(doc, "c", {"right_control"}, SAFARI) == k("c", "command")
+
+
+# --- Bug fix: Ctrl+arrows jump words in terminals too (macOS would switch Spaces) ---
+
+@pytest.mark.parametrize("app", TERMINAL_SAMPLES)
+@pytest.mark.parametrize("arrow", ["left_arrow", "right_arrow"])
+def test_ctrl_arrows_jump_words_in_terminals(doc, app, arrow):
+    assert press(doc, arrow, {"control"}, app) == k(arrow, "option")
+    assert press(doc, arrow, {"control", "shift"}, app) == k(arrow, "option", "shift")
