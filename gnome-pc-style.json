@@ -2401,6 +2401,28 @@
         {
           "type": "basic",
           "from": {
+            "pointing_button": "button1",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ],
+              "optional": [
+                "shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "pointing_button": "button1",
+              "modifiers": [
+                "command"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
             "key_code": "t",
             "modifiers": {
               "mandatory": [

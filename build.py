@@ -101,6 +101,10 @@ def desktop_rule():
         manip("left_arrow", "left_arrow", ctrl_alt, [], ["control"]),
         manip("right_arrow", "right_arrow", ctrl_alt, [], ["control"]),
         manip("print_screen", "5", [], [], ["command", "shift"]),      # screenshot tool
+        {"type": "basic",                                               # Ctrl+click = Cmd+click
+         "from": {"pointing_button": "button1",
+                  "modifiers": {"mandatory": ["control"], "optional": ["shift"]}},
+         "to": [{"pointing_button": "button1", "modifiers": ["command"]}]},
         {"type": "basic",                                               # Ctrl+Alt+T terminal
          "from": {"key_code": "t", "modifiers": {"mandatory": ctrl_alt}},
          "to": [{"shell_command": "open -a Terminal"}]},

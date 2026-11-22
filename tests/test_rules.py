@@ -182,7 +182,7 @@ def test_no_cross_rule_overlap(doc):
     reversed_doc = {"rules": list(reversed(doc["rules"]))}
     for rule in doc["rules"]:
         for m in rule["manipulators"]:
-            key = m["from"]["key_code"]
+            key = m["from"].get("key_code") or m["from"]["pointing_button"]
             mand = m["from"].get("modifiers", {}).get("mandatory", [])
             base = {x.replace("left_", "") for x in mand}
             for extra in (set(), {"shift"}):
@@ -190,3 +190,16 @@ def test_no_cross_rule_overlap(doc):
                     held = base | extra
                     assert press(doc, key, held, app) == press(reversed_doc, key, held, app), \
                         (key, held, app)
+
+
+# --- Final review fix: Ctrl+click ---
+
+@pytest.mark.parametrize("app", BOTH)
+def test_ctrl_click_is_cmd_click(doc, app):
+    assert press(doc, "button1", {"control"}, app) == [{"pointing_button": "button1", "modifiers": ["command"]}]
+    assert press(doc, "button1", {"control", "shift"}, app) == \
+        [{"pointing_button": "button1", "modifiers": ["command", "shift"]}]
+
+
+def test_right_ctrl_works_like_left(doc):
+    assert press(doc, "c", {"right_control"}, SAFARI) == k("c", "command")

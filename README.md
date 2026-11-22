@@ -7,7 +7,7 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 
 1. Install the three free apps:
    - [Karabiner-Elements](https://karabiner-elements.pqrs.org/): open it and approve everything it asks for
-     (driver extension, Input Monitoring, Accessibility).
+     (driver extension and Input Monitoring).
    - [AltTab](https://alt-tab-macos.netlify.app/): keep its default shortcut (Alt+Tab).
    - [Rectangle](https://rectangleapp.com/): on first launch choose **Recommended** shortcuts.
 2. Copy the rules file:
@@ -27,8 +27,8 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
   You need at least two Spaces (Mission Control → `+`).
 - **Two keys swapped?** If the key left of `1` and the key next to left Shift are swapped:
   Karabiner-Elements → Virtual Keyboard → Keyboard type → **ISO**.
-- **Alt+F4 does nothing?** Karabiner-Elements → Function Keys → turn on
-  **Use all F1, F2, etc. keys as standard function keys**.
+- **Alt+F4 does nothing?** Open Karabiner-EventViewer and press F4. If it shows a media key
+  instead of `f4`, your keyboard's Fn-lock is on (often toggled with Fn+Esc).
 - **Mouse scrolling**: System Settings → Mouse → turn off **Natural scrolling**.
 
 ## What you get
@@ -39,6 +39,7 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 | Ctrl+←/→, Ctrl+Backspace/Delete | except terminals | jump / delete by word |
 | Home / End, Ctrl+Home / Ctrl+End (+Shift to select) | except terminals | line / document start & end |
 | Ctrl+F4 | except terminals | close tab |
+| Ctrl+click (+Shift) | everywhere | Cmd+click: open link in new tab, add to selection |
 | Ctrl+Shift+C / Ctrl+Shift+V | terminals | copy / paste (other Ctrl keys stay real Ctrl) |
 | Super alone | everywhere | Spotlight |
 | Alt+Tab | everywhere | switch windows (AltTab) |
@@ -72,5 +73,8 @@ Tests: `python3 -m pytest -q`.
 
 - Middle-click paste of selected text (Linux primary selection) doesn't exist on macOS.
 - Ctrl+H becomes Cmd+H, which **hides** the app on a Mac (on Linux it's history/replace).
+- Alt+F4 sends Cmd+W, so in a browser it closes the tab rather than the whole window.
+- Terminals built into VS Code or JetBrains aren't separate apps, so Ctrl+C there becomes
+  Cmd+C (copy) and doesn't stop a running program. Use the Win key + C there.
 - App-specific Ctrl shortcuts that differ on Mac (e.g. Ctrl+H, Ctrl+, for settings) follow
   the Mac app's Cmd shortcut, not the Linux one.

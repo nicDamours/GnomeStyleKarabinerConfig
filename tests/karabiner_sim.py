@@ -38,7 +38,7 @@ def _conditions_ok(manip, app):
 
 def _match(manip, key, held, app):
     frm = manip["from"]
-    if frm.get("key_code") != key or not _conditions_ok(manip, app):
+    if (frm.get("key_code") or frm.get("pointing_button")) != key or not _conditions_ok(manip, app):
         return None
     mods = frm.get("modifiers", {})
     mandatory = mods.get("mandatory", [])
@@ -58,7 +58,7 @@ def _match(manip, key, held, app):
     out = []
     for item in manip.get("to", []):
         item = dict(item)
-        if "key_code" in item:
+        if "key_code" in item or "pointing_button" in item:
             m = sorted(set(item.get("modifiers", [])) | set(passthrough))
             item.pop("modifiers", None)
             if m:
