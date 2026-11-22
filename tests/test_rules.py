@@ -107,3 +107,86 @@ def test_terminal_lists_identical(doc):
              for cond in m.get("conditions", [])}
     assert "frontmost_application_if" in types
     assert all(lst == build.TERMINALS for lst in lists)
+
+
+# --- Task 3: Desktop & window shortcuts ---
+
+BOTH = [SAFARI, TERMINAL]
+
+
+def desktop_rule(doc):
+    return next(r for r in doc["rules"] if r["description"].startswith("GNOME: desktop"))
+
+
+@pytest.mark.parametrize("key", ["left_command", "right_command"])
+def test_super_alone_spotlight(doc, key):
+    m = next(m for m in desktop_rule(doc)["manipulators"] if m["from"]["key_code"] == key)
+    assert m["to"] == [{"key_code": key}]
+    assert m["to_if_alone"] == [{"key_code": "spacebar", "modifiers": ["left_command"]}]
+    assert m["from"]["modifiers"]["optional"] == ["any"]
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_alt_f4_closes_window(doc, app):
+    assert press(doc, "f4", {"option"}, app) == k("w", "command")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_super_h_minimize(doc, app):
+    assert press(doc, "h", {"command"}, app) == k("m", "command")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_super_l_lock(doc, app):
+    assert press(doc, "l", {"command"}, app) == k("q", "command", "control")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_super_arrows_rectangle(doc, app):
+    assert press(doc, "left_arrow", {"command"}, app) == k("left_arrow", "control", "option")
+    assert press(doc, "right_arrow", {"command"}, app) == k("right_arrow", "control", "option")
+    assert press(doc, "up_arrow", {"command"}, app) == k("return_or_enter", "control", "option")
+    assert press(doc, "down_arrow", {"command"}, app) == k("delete_or_backspace", "control", "option")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_workspaces(doc, app):
+    assert press(doc, "page_up", {"command"}, app) == k("left_arrow", "control")
+    assert press(doc, "page_down", {"command"}, app) == k("right_arrow", "control")
+    assert press(doc, "left_arrow", {"control", "option"}, app) == k("left_arrow", "control")
+    assert press(doc, "right_arrow", {"control", "option"}, app) == k("right_arrow", "control")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_print_screen(doc, app):
+    assert press(doc, "print_screen", set(), app) == k("5", "command", "shift")
+
+
+@pytest.mark.parametrize("app", BOTH)
+def test_ctrl_alt_t_terminal(doc, app):
+    assert press(doc, "t", {"control", "option"}, app) == [{"shell_command": "open -a Terminal"}]
+
+
+def test_right_alt_never_remapped(doc):
+    for rule in doc["rules"]:
+        for m in rule["manipulators"]:
+            assert "right_option" not in m["from"].get("modifiers", {}).get("mandatory", [])
+    keys = GENERIC_KEYS + ["f4", "left_arrow", "right_arrow", "t"]
+    for key in keys:
+        for mods in ({"right_option"}, {"right_option", "shift"}):
+            assert press(doc, key, mods, SAFARI) is None, (key, mods)
+
+
+def test_no_cross_rule_overlap(doc):
+    """Karabiner may reorder rules on enable: results must not depend on rule order."""
+    reversed_doc = {"rules": list(reversed(doc["rules"]))}
+    for rule in doc["rules"]:
+        for m in rule["manipulators"]:
+            key = m["from"]["key_code"]
+            mand = m["from"].get("modifiers", {}).get("mandatory", [])
+            base = {x.replace("left_", "") for x in mand}
+            for extra in (set(), {"shift"}):
+                for app in BOTH:
+                    held = base | extra
+                    assert press(doc, key, held, app) == press(reversed_doc, key, held, app), \
+                        (key, held, app)

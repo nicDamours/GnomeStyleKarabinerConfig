@@ -76,10 +76,43 @@ def terminal_rule():
                              for key in ("c", "v")]}
 
 
+def desktop_rule():
+    # Applies in every app. Alt combos use left_option only: right Alt is AltGr.
+    cmd, ctrl_alt, rect = ["command"], ["control", "left_option"], ["control", "option"]
+    super_alone = [
+        {"type": "basic",
+         "from": {"key_code": key, "modifiers": {"optional": ["any"]}},
+         "to": [{"key_code": key}],
+         "to_if_alone": [{"key_code": "spacebar", "modifiers": ["left_command"]}]}
+        for key in ("left_command", "right_command")
+    ]
+    ms = super_alone + [
+        manip("f4", "w", ["left_option"], [], ["command"]),            # Alt+F4 close window
+        manip("h", "m", cmd, [], ["command"]),                          # Super+H minimize
+        manip("l", "q", cmd, [], ["control", "command"]),               # Super+L lock
+        # Super+arrows -> Rectangle defaults
+        manip("left_arrow", "left_arrow", cmd, [], rect),
+        manip("right_arrow", "right_arrow", cmd, [], rect),
+        manip("up_arrow", "return_or_enter", cmd, [], rect),
+        manip("down_arrow", "delete_or_backspace", cmd, [], rect),
+        # Workspaces -> macOS Spaces (Ctrl+arrows)
+        manip("page_up", "left_arrow", cmd, [], ["control"]),
+        manip("page_down", "right_arrow", cmd, [], ["control"]),
+        manip("left_arrow", "left_arrow", ctrl_alt, [], ["control"]),
+        manip("right_arrow", "right_arrow", ctrl_alt, [], ["control"]),
+        manip("print_screen", "5", [], [], ["command", "shift"]),      # screenshot tool
+        {"type": "basic",                                               # Ctrl+Alt+T terminal
+         "from": {"key_code": "t", "modifiers": {"mandatory": ctrl_alt}},
+         "to": [{"shell_command": "open -a Terminal"}]},
+    ]
+    return {"description": "GNOME: desktop & window shortcuts (Super, Alt+F4, workspaces)",
+            "manipulators": ms}
+
+
 def build():
     return {
         "title": "GNOME-style shortcuts for a Windows keyboard",
-        "rules": [ctrl_text_rule(), terminal_rule()],
+        "rules": [ctrl_text_rule(), terminal_rule(), desktop_rule()],
     }
 
 
