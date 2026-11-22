@@ -18,6 +18,20 @@ TERMINALS = [
     r"^dev\.warp\.Warp",
 ]
 
+# Home/End are left alone here: Cmd+left/right means Back/Forward on a web page.
+BROWSERS = [
+    r"^com\.apple\.Safari",
+    r"^com\.google\.Chrome",
+    r"^org\.mozilla\.firefox",
+    r"^com\.microsoft\.edgemac",
+    r"^com\.brave\.Browser",
+    r"^company\.thebrowser\.Browser$",
+    r"^com\.vivaldi\.Vivaldi$",
+    r"^com\.operasoftware\.Opera",
+    r"^org\.chromium\.Chromium$",
+    r"^app\.zen-browser\.zen$",
+]
+
 GENERIC_KEYS = (
     [chr(c) for c in range(ord("a"), ord("z") + 1)]
     + [str(d) for d in range(10)]
@@ -28,6 +42,10 @@ GENERIC_KEYS = (
 
 def not_in_terminals():
     return [{"type": "frontmost_application_unless", "bundle_identifiers": TERMINALS}]
+
+
+def not_in_browsers():
+    return [{"type": "frontmost_application_unless", "bundle_identifiers": BROWSERS}]
 
 
 def manip(key, to_key, mandatory=(), optional=(), to_mods=(), conditions=None):
@@ -58,8 +76,8 @@ def ctrl_text_rule():
         manip("delete_forward", "delete_forward", ["control"], [], ["option"], c),
         manip("home", "up_arrow", ["control"], sel, ["command"], c),
         manip("end", "down_arrow", ["control"], sel, ["command"], c),
-        manip("home", "left_arrow", [], sel, ["command"], c),
-        manip("end", "right_arrow", [], sel, ["command"], c),
+        manip("home", "left_arrow", [], sel, ["command"], c + not_in_browsers()),
+        manip("end", "right_arrow", [], sel, ["command"], c + not_in_browsers()),
         manip("f4", "w", ["control"], [], ["command"], c),
     ]
     # Generic Ctrl -> Cmd. Optional is only Shift (never "any"), so Ctrl+Alt

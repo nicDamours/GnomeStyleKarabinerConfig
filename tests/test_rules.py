@@ -61,11 +61,33 @@ def test_ctrl_backspace_delete_word(doc, key):
     assert press(doc, key, {"control"}, SAFARI) == k(key, "option")
 
 
+TEXTEDIT = "com.apple.TextEdit"
+BROWSER_SAMPLES = [
+    "com.apple.Safari", "com.apple.SafariTechnologyPreview", "com.google.Chrome",
+    "com.google.Chrome.canary", "org.mozilla.firefox", "org.mozilla.firefoxdeveloperedition",
+    "com.microsoft.edgemac", "com.brave.Browser", "company.thebrowser.Browser",
+    "com.vivaldi.Vivaldi", "com.operasoftware.Opera", "org.chromium.Chromium",
+    "app.zen-browser.zen",
+]
+
+
 def test_home_end_line(doc):
-    assert press(doc, "home", set(), SAFARI) == k("left_arrow", "command")
-    assert press(doc, "end", set(), SAFARI) == k("right_arrow", "command")
-    assert press(doc, "home", {"shift"}, SAFARI) == k("left_arrow", "command", "shift")
-    assert press(doc, "end", {"shift"}, SAFARI) == k("right_arrow", "command", "shift")
+    assert press(doc, "home", set(), TEXTEDIT) == k("left_arrow", "command")
+    assert press(doc, "end", set(), TEXTEDIT) == k("right_arrow", "command")
+    assert press(doc, "home", {"shift"}, TEXTEDIT) == k("left_arrow", "command", "shift")
+    assert press(doc, "end", {"shift"}, TEXTEDIT) == k("right_arrow", "command", "shift")
+
+
+@pytest.mark.parametrize("app", BROWSER_SAMPLES)
+def test_home_end_untouched_in_browsers(doc, app):
+    """Cmd+left/right means Back/Forward on a web page, so leave Home/End alone."""
+    for key in ("home", "end"):
+        assert press(doc, key, set(), app) is None
+        assert press(doc, key, {"shift"}, app) is None
+
+
+def test_ctrl_home_end_still_mapped_in_browsers(doc):
+    assert press(doc, "home", {"control"}, "com.google.Chrome") == k("up_arrow", "command")
 
 
 def test_ctrl_home_end_document(doc):
@@ -106,7 +128,8 @@ def test_terminal_lists_identical(doc):
     types = {cond["type"] for rule in doc["rules"] for m in rule["manipulators"]
              for cond in m.get("conditions", [])}
     assert "frontmost_application_if" in types
-    assert all(lst == build.TERMINALS for lst in lists)
+    assert all(lst in (build.TERMINALS, build.BROWSERS) for lst in lists)
+    assert build.TERMINALS in lists
 
 
 # --- Task 3: Desktop & window shortcuts ---

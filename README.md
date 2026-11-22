@@ -37,7 +37,8 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 |---|---|---|
 | Ctrl+C/V/X/Z/A/S/F/T/W/L/Q… (+Shift) | everywhere except terminals | the Mac Cmd version |
 | Ctrl+←/→, Ctrl+Backspace/Delete | except terminals | jump / delete by word |
-| Home / End, Ctrl+Home / Ctrl+End (+Shift to select) | except terminals | line / document start & end |
+| Home / End (+Shift to select) | except terminals and browsers | line start & end |
+| Ctrl+Home / Ctrl+End (+Shift to select) | except terminals | document start & end |
 | Ctrl+F4 | except terminals | close tab |
 | Ctrl+click (+Shift) | everywhere | Cmd+click: open link in new tab, add to selection |
 | Ctrl+Shift+C / Ctrl+Shift+V | terminals | copy / paste (other Ctrl keys stay real Ctrl) |
@@ -59,8 +60,8 @@ Terminals recognised: Terminal, iTerm2, Ghostty, kitty, Alacritty, WezTerm, Warp
 2. **Ctrl+Shift+T** reopens a closed browser tab; in Terminal, **Ctrl+C** stops `sleep 100`
    and **Ctrl+Shift+C/V** copy/paste.
 3. Type `[ ] { } @ # | \ < > « »` with AltGr in a text editor — all land as on Linux.
-4. **Home/End on a web page outside a text field**: Mac treats this as Cmd+←/→, which can mean
-   *Back/Forward* in browsers. Tell me if it navigates away — there's an alternative mapping.
+4. **Home/End in TextEdit** go to line start/end; **in a browser** they keep the browser's own
+   behaviour (top/bottom of the page) and never trigger Back/Forward.
 5. **Alt+F4** closes a window (see the Function Keys setting above if not).
 
 ## Editing
@@ -71,6 +72,9 @@ Tests: `python3 -m pytest -q`.
 
 ## Known gaps
 
+- Home/End don't go to line start/end inside browser text fields (that mapping would be
+  Back/Forward on the page). Browsers recognised: Safari, Chrome, Firefox, Edge, Brave, Arc,
+  Vivaldi, Opera, Chromium, Zen.
 - Middle-click paste of selected text (Linux primary selection) doesn't exist on macOS.
 - Ctrl+H becomes Cmd+H, which **hides** the app on a Mac (on Linux it's history/replace).
 - Alt+F4 sends Cmd+W, so in a browser it closes the tab rather than the whole window.

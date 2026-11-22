@@ -244,6 +244,21 @@
                 "^com\\.github\\.wez\\.wezterm$",
                 "^dev\\.warp\\.Warp"
               ]
+            },
+            {
+              "type": "frontmost_application_unless",
+              "bundle_identifiers": [
+                "^com\\.apple\\.Safari",
+                "^com\\.google\\.Chrome",
+                "^org\\.mozilla\\.firefox",
+                "^com\\.microsoft\\.edgemac",
+                "^com\\.brave\\.Browser",
+                "^company\\.thebrowser\\.Browser$",
+                "^com\\.vivaldi\\.Vivaldi$",
+                "^com\\.operasoftware\\.Opera",
+                "^org\\.chromium\\.Chromium$",
+                "^app\\.zen-browser\\.zen$"
+              ]
             }
           ]
         },
@@ -276,6 +291,21 @@
                 "^(org|io)\\.alacritty$",
                 "^com\\.github\\.wez\\.wezterm$",
                 "^dev\\.warp\\.Warp"
+              ]
+            },
+            {
+              "type": "frontmost_application_unless",
+              "bundle_identifiers": [
+                "^com\\.apple\\.Safari",
+                "^com\\.google\\.Chrome",
+                "^org\\.mozilla\\.firefox",
+                "^com\\.microsoft\\.edgemac",
+                "^com\\.brave\\.Browser",
+                "^company\\.thebrowser\\.Browser$",
+                "^com\\.vivaldi\\.Vivaldi$",
+                "^com\\.operasoftware\\.Opera",
+                "^org\\.chromium\\.Chromium$",
+                "^app\\.zen-browser\\.zen$"
               ]
             }
           ]
