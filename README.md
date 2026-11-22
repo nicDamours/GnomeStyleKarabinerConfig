@@ -1,5 +1,9 @@
 # GNOME-style shortcuts for a Windows keyboard on macOS
 
+> **Note:** This project was written with the help of AI agents (Claude Code). The rules
+> were tested with an automated test suite and checked on a real Mac, but review them
+> before relying on them.
+
 One Karabiner-Elements file (`gnome-pc-style.json`) that makes a Windows keyboard on a Mac
 behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 
@@ -25,8 +29,12 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 - **Workspaces**: System Settings → Keyboard → Keyboard Shortcuts → Mission Control →
   keep **Move left a space** (Ctrl+←) and **Move right a space** (Ctrl+→) turned **on**.
   You need at least two Spaces (Mission Control → `+`).
-- **Two keys swapped?** If the key left of `1` and the key next to left Shift are swapped:
-  Karabiner-Elements → Virtual Keyboard → Keyboard type → **ISO**.
+- **Keyboard type (important for Canadian and most European keyboards)**: Karabiner shows up
+  to macOS as its own virtual keyboard, ANSI (US-style) by default. On an ISO keyboard
+  (one with an extra key next to left Shift, like Canadian French) that puts some keys in the
+  wrong place: for example `{ }` stop typing with AltGr, or the key left of `1` swaps
+  with the one next to left Shift. Fix: Karabiner-Elements → Virtual Keyboard →
+  Keyboard type → **ISO**.
 - **Alt+F4 does nothing?** Open Karabiner-EventViewer and press F4. If it shows a media key
   instead of `f4`, your keyboard's Fn-lock is on (often toggled with Fn+Esc).
 - **Mouse scrolling**: System Settings → Mouse → turn off **Natural scrolling**.
