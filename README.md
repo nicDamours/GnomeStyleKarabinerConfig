@@ -75,6 +75,6 @@ Tests: `python3 -m pytest -q`.
 - Ctrl+H becomes Cmd+H, which **hides** the app on a Mac (on Linux it's history/replace).
 - Alt+F4 sends Cmd+W, so in a browser it closes the tab rather than the whole window.
 - Terminals built into VS Code or JetBrains aren't separate apps, so Ctrl+C there becomes
-  Cmd+C (copy) and doesn't stop a running program. Use the Win key + C there.
+  Cmd+C (copy) and doesn't stop a running program. No key sends a real Ctrl+C there yet.
 - App-specific Ctrl shortcuts that differ on Mac (e.g. Ctrl+H, Ctrl+, for settings) follow
   the Mac app's Cmd shortcut, not the Linux one.
