@@ -38,6 +38,8 @@ behave like GNOME on Linux. Physical keys: **Super** = Win, **Alt**, **Ctrl**.
 - **Alt+F4 does nothing?** Open Karabiner-EventViewer and press F4. If it shows a media key
   instead of `f4`, your keyboard's Fn-lock is on (often toggled with Fn+Esc).
 - **Mouse scrolling**: System Settings → Mouse → turn off **Natural scrolling**.
+- **Ctrl+click on links**: Karabiner-Elements → Devices → turn on **Modify events** for your
+  mouse. Without it Karabiner ignores the mouse and Ctrl+click stays a right-click.
 
 ## What you get
 
@@ -84,6 +86,8 @@ Tests: `python3 -m pytest -q`.
 - Home/End don't go to line start/end inside browser text fields (that mapping would be
   Back/Forward on the page). Browsers recognised: Safari, Chrome, Firefox, Edge, Brave, Arc,
   Vivaldi, Opera, Chromium, Zen.
+- Ctrl+click on an Apple trackpad (built-in or Magic Trackpad) is still a right-click:
+  Karabiner can't modify trackpad clicks. Use Super+click there to open a link in a new tab.
 - Middle-click paste of selected text (Linux primary selection) doesn't exist on macOS.
 - Ctrl+H becomes Cmd+H, which **hides** the app on a Mac (on Linux it's history/replace).
 - Alt+F4 sends Cmd+W, so in a browser it closes the tab rather than the whole window.
